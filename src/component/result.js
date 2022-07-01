@@ -3,7 +3,8 @@ import { Card,  } from 'react-bootstrap';
 const Result =(props) => {
     const { repos } = props;
     console.log("Repos is :",repos.data);
-              
+
+  
               
     return (
                 repos.length !== 0 ? (repos.data.map((item) => 
