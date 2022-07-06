@@ -18,28 +18,10 @@ const initialState = {
   };
   
   export default reposReducer;
-  
 
-
-
-
-  const initSate ={
-    issues:[]
-  }
-  const issuesReducer = (state = initSate, action) => {
-    switch (action.type) {
-      case "FETCH_ISSUES":
-  
-        return {
-          ...state,
-          issues: action.payload,
-  
-        };
-      default:
-        return state;
-  
+  export const textReducer = (state='', action) => {
+    if(action.type === 'text_action') {
+      return action.payload;
     }
-  };
-  
-  export  {issuesReducer};
-  
+    return state; 
+  }

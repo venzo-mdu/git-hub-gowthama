@@ -1,2 +1,3 @@
 export const getRepos = (state) => state.reposReducer.repos;
-export const getIssues =(state) => state.issuseReducer.issues;
+
+export const getText = (state) => state.textReducer.text;
