@@ -1,13 +1,10 @@
 import { Card } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRepos } from "../store/action";
-import { getRepos } from "../store/selectors";
-
+import { selecte } from '../stores/action';
 // const Data = (props) => {
-//     const {rep} =props
-//     console.log(rep)
+    
 //     const dispatch = useDispatch();
 //     const repos = useSelector(getRepos);
     
@@ -34,25 +31,63 @@ import { getRepos } from "../store/selectors";
 //   export default Data;
 
 
-  function Data({match}) {
+  function Data() {
+    const dispatch = useDispatch();
+    const selectedValue = useSelector((state) => state.selectedValue)
+    console.log("value",selectedValue);
+
     useEffect(() => {
       fetchiditem();
-    }, []);
+    }, [selectedValue]);
+
+    useEffect( () => {dispatch(selecte());}, [dispatch]);
+
     const [itemid, setitems] = useState([]);
-   
-    console.log(match);
+       console.log("list",itemid);
+
   
     const fetchiditem = async () => {
-      const data = await fetch (`https://api.github.com/repos/venzo-tech/${match.params.name}/issues`
+      const data = await fetch (`https://api.github.com/repos/venzo-tech/${selectedValue}/issues`
       );
       const itemdata = await data.json();
       setitems(itemdata.data.item);
+      console.log("seeee",itemdata.data.item)
     }
     return (
-      <div>
-        {itemid.name}
-      </div>
-    );
+        itemid.map((item) => 
+        <Card className='card'  key ={item.id} style={{ width: '18rem' }}> 
+            <Card.Img className='my-2' variant="top" src={item.owner.avatar_url} /> 
+                Project Name: <Card.Title> {item.name} </Card.Title>
+         </Card>       
+    )
+    )
   }
   
-  export default Data;
+
+
+  const mapStateToProps = (state) => {
+    console.log("state", state.selectedValue)
+
+    return {
+      
+      selectedValue: state.selectedValue
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        inputChanged:(e) => {
+            const action ={ type:"SELECT_CHANGE"};
+            console.log("disp", action)
+
+            dispatch(action);
+        }
+
+    }
+}
+
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Data);
+  // export default Data;

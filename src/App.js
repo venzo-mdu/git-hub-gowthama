@@ -2,6 +2,8 @@ import './App.css';
 import SearchBar from './component/search'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Data from "./component/data"
+import store from './stores';
+
 function App() {
   return (
 
