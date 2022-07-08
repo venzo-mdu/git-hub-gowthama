@@ -2,7 +2,7 @@ import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selecte } from '../stores/action';
+import { select } from '../stores/action';
 // const Data = (props) => {
     
 //     const dispatch = useDispatch();
@@ -32,62 +32,86 @@ import { selecte } from '../stores/action';
 
 
   function Data() {
-    const dispatch = useDispatch();
-    const selectedValue = useSelector((state) => state.selectedValue)
-    console.log("value",selectedValue);
-
+    // const dispatch = useDispatch();
+    const selectValue = useSelector((state) => state.selectValue)
+    console.log("value",selectValue.text);
     useEffect(() => {
-      fetchiditem();
-    }, [selectedValue]);
+      fetchidApi();
+      fetchidissues();
+    }, [selectValue]);
 
-    useEffect( () => {dispatch(selecte());}, [dispatch]);
+    // useEffect( () => {dispatch(select());}, [dispatch]);
 
-    const [itemid, setitems] = useState([]);
-       console.log("list",itemid);
+    const [open_issues, setOpen_issues] = useState([]);
+    const [close_issues, setClosed_issues] = useState([]);
 
-  
-    const fetchiditem = async () => {
-      const data = await fetch (`https://api.github.com/repos/venzo-tech/${selectedValue}/issues`
+    const fetchidApi = async () => {
+      const data = await fetch (`https://api.github.com/repos/venzo-tech/${selectValue.text}/issues`
       );
       const itemdata = await data.json();
-      setitems(itemdata.data.item);
-      console.log("seeee",itemdata.data.item)
+      setOpen_issues(itemdata);
+    }
+    const fetchidissues = async () => {
+      const data = await fetch (`https://api.github.com/repos/venzo-tech/${selectValue.text}/issues/comments`);
+      const item =await data.json();
+      setClosed_issues(item)
+      console.log("seeee",data,item)
+
     }
     return (
-        itemid.map((item) => 
-        <Card className='card'  key ={item.id} style={{ width: '18rem' }}> 
-            <Card.Img className='my-2' variant="top" src={item.owner.avatar_url} /> 
-                Project Name: <Card.Title> {item.name} </Card.Title>
+      <>
+      { open_issues.map((item) => 
+        <Card className='card my-5'  key ={item.id} style={{ width: '18rem' }}> 
+          Project Name: <Card.Title> {item.title} </Card.Title>
+            <Card.Body>
+            <Card.Text>Id: &nbsp;{item.id}  </Card.Text>
+              <Card.Text>Created time: &nbsp;{item.created_at}</Card.Text>
+              <Card.Text>State: &nbsp;{item.state}</Card.Text>
+              <Card.Text>Number: &nbsp;{item.number} </Card.Text>
+            </Card.Body>
          </Card>       
-    )
+        )}
+        { close_issues.map((item) => 
+        <Card className='card my-5'  key ={item.id} style={{ width: '18rem' }}> 
+          Project Name: <Card.Title> {item.title} </Card.Title>
+            <Card.Body>
+            <Card.Text>Id: &nbsp;{item.id}  </Card.Text>
+              <Card.Text>Created time: &nbsp;{item.created_at}</Card.Text>
+              <Card.Text>State: &nbsp;{item.state}</Card.Text>
+              <Card.Text>Number: &nbsp;{item.number} </Card.Text>
+            </Card.Body>
+         </Card>       
+    )}
+      </>
+     
     )
   }
   
 
 
-  const mapStateToProps = (state) => {
-    console.log("state", state.selectedValue)
+//   const mapStateToProps = (state) => {
+//     console.log("state", state.selectValue)
 
-    return {
+//     return {
       
-      selectedValue: state.selectedValue
-    }
-}
+//       selectValue: state.selectValue
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        inputChanged:(e) => {
-            const action ={ type:"SELECT_CHANGE"};
-            console.log("disp", action)
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         inputChanged:(e) => {
+//             const action ={ type:"SELECT_CHANGE"};
+//             console.log("disp", action)
 
-            dispatch(action);
-        }
+//             dispatch(action);
+//         }
 
-    }
-}
-
-
+//     }
+// }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Data);
-  // export default Data;
+
+
+// export default connect(mapStateToProps,mapDispatchToProps)(Data);
+  export default Data;

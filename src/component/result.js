@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { selecte } from '../stores/action';
+import { select } from '../stores/action';
 import { type } from '@testing-library/user-event/dist/type';
 
  const Result =(props) => {
@@ -19,7 +19,7 @@ import { type } from '@testing-library/user-event/dist/type';
             const result = name
             console.log("check",result)
             const action ={ type:"SELECT_CHANZGE", text:result};
-            dispatch(selecte(action))
+            dispatch(select(action))
             navigate('/data')
 
     }  
@@ -27,7 +27,7 @@ import { type } from '@testing-library/user-event/dist/type';
 
     return (
     repos.length !== 0 ? (repos.data.map((item) => 
-        <Card className='card'  key ={item.id} style={{ width: '18rem' }}> 
+        <Card className='card '  key ={item.id} style={{ width: '18rem' }}> 
             <Card.Img className='my-2' variant="top" src={item.owner.avatar_url} /> 
                 Project Name: <Card.Title> {item.name} </Card.Title>
             <Card.Subtitle className="my-2 text-muted">Project Id {item.id}</Card.Subtitle> 

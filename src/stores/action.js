@@ -1,4 +1,4 @@
-export const selecte = (text) => ( dispatch => {  
+export const select = (text) => ( dispatch => {  
           dispatch({type: "SELECT_CHANGE", text: text});
           console.log(text)
     } 
