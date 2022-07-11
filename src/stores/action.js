@@ -4,8 +4,8 @@ export const select = (text) => ( dispatch => {
     } 
     )
 
-// export const search = (text) => ( dispatch => {  
-//         dispatch({type: "INPUT_CHANZGE", payload: text});
-//         console.log(text)
-//     } 
-// )   
+export const search = (text) => ( dispatch => {  
+        dispatch({type: "INPUT_CHANZGE", text: text});
+        console.log(text)
+    } 
+)   

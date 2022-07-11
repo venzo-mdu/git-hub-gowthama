@@ -1,16 +1,12 @@
-import React, {useState}  from 'react'
-import axios from 'axios'
-import { connect } from 'react-redux';
+import React from 'react'
 import { Card } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { select } from '../stores/action';
-import { type } from '@testing-library/user-event/dist/type';
-
+import axios from 'axios';
  const Result =(props) => {
     const { repos } = props;
     console.log("Repos is :",repos.data);
-    // const [names, setName ] =useState('')
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -24,6 +20,15 @@ import { type } from '@testing-library/user-event/dist/type';
 
     }  
 
+    const github = async (name) => {
+        const result = name
+        console.log("check",result)
+        const action ={ type:"SELECT_CHANZGE", text:result};
+        dispatch(select(action))
+        navigate('/projects')
+
+} 
+    
 
     return (
     repos.length !== 0 ? (repos.data.map((item) => 
@@ -39,13 +44,15 @@ import { type } from '@testing-library/user-event/dist/type';
                 <Card.Link onClick={() => handleClick(item.name)}  value ={item.name}>open_issues:&nbsp; {item.open_issues} open issues count: {item.open_issues_count}</Card.Link>
             </Card.Body>
             <Card.Link className='prj_link' href={item.html_url}>git Link </Card.Link>
-            <a  className='prj_link' href={`${item.html_url}/projects`} > project details</a> 
+            <a  className='prj_link'  onClick={() => github(item.name)}> project details</a> 
         </Card>
 
             )) : (<p>no repos</p>)
 
     )
 }
+
+export default Result;
 
 
 // const mapStateToProps = (state) => {
@@ -68,4 +75,3 @@ import { type } from '@testing-library/user-event/dist/type';
 
 
 // export default connect(mapStateToProps,mapDispatchToProps)(Result);
-export default Result
