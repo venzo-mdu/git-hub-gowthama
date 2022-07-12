@@ -12,12 +12,9 @@ const SearchBar =(props) => {
         try{
             const result =await axios(`https://api.github.com/orgs/${props.inputValue}/repos`,{
                 headers: {
-                    // 'Authorization': `token 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`,\
-                     'Authorization': `Bearer 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`,
-
-                  },
-            }
-            )
+                     'Authorization': `Bearer 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`,
+                  },   
+            })
             const action ={ type:"INPUT_CHANZGE", text:props.inputValue};
             console.log("action",props.inputChanged)
             dispatch(search(action)) 
@@ -35,7 +32,9 @@ const SearchBar =(props) => {
                 <br /><input  type='text' placeholder='search' value ={props.inputValue}  onChange ={props.inputChanged}/>    
                 <button className='btn btn-primary mx-3' onClick ={handleClick}> search </button>
             </div>
+
             <div className='result'>
+            
                 <Result repos ={repos} />
             </div>
         </div>

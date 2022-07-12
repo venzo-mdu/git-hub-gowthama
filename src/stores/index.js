@@ -2,7 +2,9 @@ import {configureStore } from '@reduxjs/toolkit'
 
 const initialState ={
     inputValue : '',
-    selectValue: ''
+    selectValue: '',
+    idValue:'',
+    projId:''
 };
 
 const reducer = (state = initialState, action ) =>{
@@ -14,7 +16,13 @@ const reducer = (state = initialState, action ) =>{
             return Object.assign({}, state, {inputValue: action.text})
         case "SELECT_CHANGE":
             console.log("change",action.type,action.text)
-            return Object.assign({},state, {selectValue: action.text})    
+            return Object.assign({},state, {selectValue: action.text})   
+        case "ProjectID_CHANZGE":
+            console.log("changeId",action.type,action.text)
+            return Object.assign({},state, {idValue: action.text}) 
+        case "ProjectDet_CHANZGE":
+            console.log("changeDet",action.type,action.text)
+            return Object.assign({},state, {projId: action.text})
         default:
             return state;
     }

@@ -9,3 +9,14 @@ export const search = (text) => ( dispatch => {
         console.log(text)
     } 
 )   
+
+export const projectId = (text) => ( dispatch => {  
+    dispatch({type: "ProjectID_CHANZGE", text: text});
+    console.log(text)
+} 
+)
+export const projectDet = (text) => ( dispatch => {  
+    dispatch({type: "ProjectDet_CHANZGE", text: text});
+    console.log(text)
+} 
+)
