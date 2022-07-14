@@ -4,38 +4,36 @@ import { useSelector } from "react-redux";
 
 
 
-function Details() {
-    const idValue =useSelector ((state) => state.projId)
-    console.log("Details", idValue.text);
+function Details(props) {
+    const detValue =useSelector ((state) => state.projId)
+    console.log("Details", detValue.text,props);
 
     useEffect(() => {
-      fetchidApi();
-    }, [idValue]);
+      fetchidId();
+    }, [detValue]);
   
   
-    const [open_issues, setOpen_issues] = useState([]);
+    const [issues, setissues] = useState([]);
   
-    const fetchidApi = async () => {
-      const data = await fetch(`https://api.github.com/projects/columns/${idValue.text}/cards`,{
+    const fetchidId = async () => {
+      const data = await fetch(`https://api.github.com/projects/columns/${detValue.text}/cards`,{
           headers: {
                'Authorization': `Bearer `,
             },   
       }
       );
       const itemdata = await data.json();
-      setOpen_issues(itemdata);
-      // console.log("issues", itemdata);
+      setissues(itemdata);
   
     }
  
     return (
       <div>
-        <h2 className=' mx-5 my-2'> Open Issues</h2>
+        <h2 className=' mx-5 my-2'>Details</h2>
         <div className='open_issuse'>
-          {open_issues.map((item) =>
+          {issues.map((item) =>
             <Card className='card my-5' key={item.id} style={{ width: '18rem' }}>
-            Issues Name: <Card.Title> {item.note} </Card.Title>
-             
+             Name: <Card.Title> {item.note} </Card.Title>
             </Card>
           )}
         </div>

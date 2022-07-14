@@ -18,7 +18,11 @@ function Data() {
   const [open_issues, setOpen_issues] = useState([]);
 
   const fetchidApi = async () => {
-    const data = await fetch(`https://api.github.com/repos/${orgValue.text}/${selectValue.text}/issues`
+    const data = await fetch(`https://api.github.com/repos/${orgValue.text}/${selectValue.text}/issues`,{
+      headers: {
+           'Authorization': `Bearer `,
+        },   
+  }
     );
     const itemdata = await data.json();
     setOpen_issues(itemdata);
