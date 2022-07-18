@@ -2,8 +2,6 @@ import { Card } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-
-
 function Data() {
   const selectValue = useSelector((state) => state.selectValue)
   const orgValue =useSelector ((state) => state.inputValue)
@@ -20,7 +18,7 @@ function Data() {
   const fetchidApi = async () => {
     const data = await fetch(`https://api.github.com/repos/${orgValue.text}/${selectValue.text}/issues`,{
       headers: {
-           'Authorization': `Bearer `,
+           'Authorization': `Bearer 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`,
         },   
   }
     );
@@ -45,64 +43,8 @@ function Data() {
           </Card>
         )}
       </div>
-      
     </div>
-
   )
 }
 
 export default Data;
-
-
-//   const mapStateToProps = (state) => {
-//     console.log("state", state.selectValue)
-
-//     return {
-
-//       selectValue: state.selectValue
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         inputChanged:(e) => {
-//             const action ={ type:"SELECT_CHANGE"};
-//             console.log("disp", action)
-
-//             dispatch(action);
-//         }
-
-//     }
-// }
-
-
-
-
-// export default connect(mapStateToProps,mapDispatchToProps)(Data);
-
-// const Data = (props) => {
-
-//     const dispatch = useDispatch();
-//     const repos = useSelector(getRepos);
-
-//     useEffect( () => {dispatch(fetchRepos());}, [dispatch]);
-
-//     return (
-//         <div className='container '>
-//         {repos.map((repos) =>
-//          <Card className='card'  key ={repos.id} style={{ width: '18rem' }}> 
-//          {console.log(repos.name)}
-
-//             <Card.Body>         
-//                 <Card.Text>issues: &nbsp;{repos.html_url} <br/> <br/>&nbsp; Forks_count:{repos.forks_count} </Card.Text>
-// =            </Card.Body>
-
-//         </Card>)}    
-
-//         </div>
-//     );
-//   };
-
-
-
-//   export default Data;

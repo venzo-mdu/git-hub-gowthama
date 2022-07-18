@@ -1,21 +1,21 @@
 import { Card } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import {useNavigate} from "react-router-dom"
 import { useDispatch } from "react-redux";
 import { projectId } from '../stores/action';
 
 function Project() {
+  
   const selectValue = useSelector((state) => state.selectValue)
   const orgValue =useSelector ((state) => state.inputValue)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   console.log("value", orgValue.text);
+  
   useEffect(() => {
     fetchidApi();
   }, [selectValue]);
-
 
   const [Project, setProject] = useState([]);
   
@@ -24,8 +24,7 @@ function Project() {
         headers: {
              'Authorization': `Bearer `,
           },   
-    }
-    );
+    });
     const itemdata = await data.json();
     setProject(itemdata);
   }
@@ -36,7 +35,6 @@ function Project() {
     const action ={ type:"ProjectID_CHANZGE", text:id};
     dispatch(projectId(action))
     navigate('/ProjectsDetails')
-
 }
   return (
 
@@ -45,15 +43,11 @@ function Project() {
       <div className='projects details'>
         {Project.map((item) =>
           <Card className='card my-5' key={item.id} style={{ width: '18rem' }}>
-          projects Name: <Card.Link onClick={() => handleClick(item.id)}  value ={item.name}> {item.name} </Card.Link>
-
-            
+          projects Name: <Card.Link className='prj_link' onClick={() => handleClick(item.id)}  value ={item.name}> {item.name} </Card.Link>
           </Card>
         )}
       </div>
-      
     </div>
-
   )
 }
 
